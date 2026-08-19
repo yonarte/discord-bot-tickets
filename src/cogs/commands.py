@@ -1,0 +1,50 @@
+from disnake import CommandInteraction, Embed, ButtonStyle, ui
+from disnake.ext import commands
+
+from cogs.views import CreateTicket
+from config import bot
+
+
+class Commands(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.slash_command(name="setup", description="Setup the bot for your server")
+    async def setup(self, inter: CommandInteraction):
+        await inter.response.defer(ephemeral=True)
+
+        # Create category and text channel
+        categoty = await inter.guild.create_category(
+            name="Tickets"
+        )
+
+        text_channel = await inter.guild.create_text_channel(
+            name="✏️ㆍcreate",
+            category=categoty,
+            topic="You can create a ticket here!"
+        )
+
+        # Create message
+        container = ui.Container(
+            ui.TextDisplay(
+                content=
+                    "## Tickets\n" \
+                    "1. Click the Create button below\n" \
+                    "2. Select the category that best matches your issue (e.g., Billing, Technical Support, or General Inquiry)\n" \
+                    "3. Describe your issue in the private thread that opens. A moderators member will assist you shortly"
+            ),
+            ui.Separator(),
+            ui.Section(
+                ui.TextDisplay(content="**Ticket**\nCreate a private thread with moderators"),
+                accessory=ui.Button(
+                    style=ButtonStyle.green,
+                    label="Create",
+                    custom_id="viewCreateTicket.button.create",
+                    emoji="✏️"
+                )
+            )
+        )
+
+        # send messages
+        await text_channel.send(components=[container])
+        await inter.send(content="The bot setup successfully", ephemeral=True)
