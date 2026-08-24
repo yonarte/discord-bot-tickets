@@ -1,4 +1,4 @@
-from disnake import CommandInteraction, Embed, ButtonStyle, ui
+from disnake import CommandInteraction, Embed, ButtonStyle, ui, Permissions
 from disnake.ext import commands
 
 from cogs.views import CreateTicket
@@ -9,7 +9,7 @@ class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.slash_command(name="setup", description="Setup the bot for your server")
+    @commands.slash_command(name="setup", description="Setup the bot for your server", default_member_permissions=Permissions(administrator=True))
     async def setup(self, inter: CommandInteraction):
         await inter.response.defer(ephemeral=True)
 
