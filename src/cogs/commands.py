@@ -1,9 +1,6 @@
 from disnake import CommandInteraction, Embed, ButtonStyle, ui, Permissions
 from disnake.ext import commands
 
-from cogs.views import CreateTicket
-from config import bot
-
 
 class Commands(commands.Cog):
     def __init__(self, bot):
