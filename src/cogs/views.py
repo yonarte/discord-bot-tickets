@@ -22,7 +22,8 @@ class DialogButtons(ui.View):
 
         components = createTicketMessageComponents(
             author=inter.user,
-            colour=Colour.red()
+            colour=Colour.red(),
+            disabled=True
         )
 
         await self.inter.message.edit(components=components)
