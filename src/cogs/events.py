@@ -1,6 +1,9 @@
-from disnake import Interaction, MessageInteraction, ChannelType, Embed, Color, ButtonStyle, ui
+import time
+
+from disnake import Interaction, MessageInteraction, ChannelType, Embed, Colour, ButtonStyle, ui
 from disnake.ext import commands
 
+from utils import createTicketMessageComponents
 from cogs.views import DialogButtons
 
 
@@ -36,48 +39,22 @@ class TicketButtons(commands.Cog):
             # Create thread
             thread = await inter.channel.create_thread(
                 name=f"{inter.user.global_name}'s ticket",
-                type=ChannelType.private_thread
+                type=ChannelType.private_thread,
+                invitable=False
             )
-
-            await thread.add_user(inter.user)
 
             # Create message
-            container = ui.Container(
-                ui.TextDisplay(content="## New ticket\nDescribe your issue or question here and moderators will help you!"),
-                ui.Separator(),
-                ui.TextDisplay(content=f"`👤Author`\n{inter.user.mention}"),
-                ui.TextDisplay(content="`🗂️Category`\n**Base ticket**"),
-                ui.TextDisplay(content="`📊Status`\n**Active**"),
-                ui.Separator(),
-                ui.ActionRow(
-                    ui.Button(
-                        style=ButtonStyle.gray,
-                        label="Category",
-                        disabled=True,  # Add func later
-                        custom_id="viewAdminTicket.button.category",
-                        emoji="🗂️"
-                    ),
-                    ui.Button(
-                        style=ButtonStyle.gray,
-                        label="Status",
-                        disabled=True,  # Add func later
-                        custom_id="viewAdminTicket.button.status",
-                        emoji="🧷"
-                    ),
-                    ui.Button(
-                        style=ButtonStyle.red,
-                        label="Close",
-                        custom_id="viewAdminTicket.button.close",
-                        emoji="📌"
-                    )
-                )
+            components = createTicketMessageComponents(
+                author=inter.user,
+                created_at=round(time.time()),
+                colour=Colour.green()
             )
-            
-            await thread.send(components=[container])
+
+            await thread.send(components=components)
 
             embed = Embed(
                 description=f"The [ticket]({thread.jump_url}) has been successfully created!",
-                colour=Color.green()
+                colour=Colour.green()
             )
 
             await inter.send(embed=embed, ephemeral=True)
@@ -85,7 +62,7 @@ class TicketButtons(commands.Cog):
         elif custom_id == "viewAdminTicket.button.close":
             embed = Embed(
                 description="Are you sure you want to **delete** the ticket?",
-                color=Color.from_rgb(57, 58, 65)
+                color=Colour.from_rgb(57, 58, 65)
             )
 
             view = DialogButtons(inter=inter, timeout=60)

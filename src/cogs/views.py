@@ -1,4 +1,7 @@
-from disnake import ui, ButtonStyle, Interaction, MessageInteraction, Embed, Color
+import time
+
+from disnake import ui, ButtonStyle, Interaction, MessageInteraction, Embed, Colour
+from utils import createTicketMessageComponents
 
 
 class DialogButtons(ui.View):
@@ -14,9 +17,16 @@ class DialogButtons(ui.View):
     async def buttonAccept(self, button: ui.Button, inter: MessageInteraction):
         embed = Embed(
             description=f"The ticket has been successfully closed! 🔒",
-            colour=Color.green()
+            colour=Colour.green()
         )
 
+        components = createTicketMessageComponents(
+            author=inter.user,
+            created_at=round(time.time()),
+            colour=Colour.red()
+        )
+
+        await self.inter.message.edit(components=components)
         await inter.response.edit_message(embed=embed, view=None)
         await inter.channel.edit(archived=True, locked=True)
 
