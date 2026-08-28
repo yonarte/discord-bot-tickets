@@ -46,7 +46,6 @@ class TicketButtons(commands.Cog):
             # Create message
             components = createTicketMessageComponents(
                 author=inter.user,
-                created_at=round(time.time()),
                 colour=Colour.green()
             )
 

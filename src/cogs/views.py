@@ -22,7 +22,6 @@ class DialogButtons(ui.View):
 
         components = createTicketMessageComponents(
             author=inter.user,
-            created_at=round(time.time()),
             colour=Colour.red()
         )
 
