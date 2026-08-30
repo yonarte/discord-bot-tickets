@@ -33,6 +33,8 @@ class TicketButtons(commands.Cog):
         custom_id: str = inter.component.custom_id
 
         if custom_id == "viewCreateTicket.button.create":
+            await inter.response.defer()
+
             # Create thread
             thread = await inter.channel.create_thread(
                 name=f"{inter.user.global_name}'s ticket",
@@ -72,6 +74,8 @@ class TicketButtons(commands.Cog):
             await inter.send(embed=answer, ephemeral=True)
 
         elif custom_id == "viewAdminTicket.button.close":
+            await inter.response.defer()
+
             embed = Embed(
                 description="Are you sure you want to **delete** the ticket?",
                 color=Colour.from_rgb(57, 58, 65)
