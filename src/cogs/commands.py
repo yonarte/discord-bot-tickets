@@ -1,4 +1,4 @@
-from disnake import CommandInteraction, Embed, ButtonStyle, ui, Permissions
+from disnake import CommandInteraction, Embed, ButtonStyle, ui, Permissions, Colour
 from disnake.ext import commands
 
 
@@ -43,4 +43,10 @@ class Commands(commands.Cog):
 
         # send messages
         await text_channel.send(components=[container])
-        await inter.send(content="The bot setup successfully", ephemeral=True)
+
+        answer = Embed(
+            description=f"The bot setup successfully!",
+            colour=Colour.green()
+        )
+
+        await inter.send(embed=answer, ephemeral=True)
