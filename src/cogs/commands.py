@@ -26,13 +26,12 @@ class Commands(commands.Cog):
             ui.TextDisplay(
                 content=
                     "## Tickets\n" \
-                    "1. Click the Create button below\n" \
-                    "2. Select the category that best matches your issue (e.g., Billing, Technical Support, or General Inquiry)\n" \
-                    "3. Describe your issue in the private thread that opens. A moderators member will assist you shortly"
+                    "1. Click the create button below\n" \
+                    "2. Go to the created thread and our team will assist you as soon as possible!"
             ),
             ui.Separator(),
             ui.Section(
-                ui.TextDisplay(content="**Ticket**\nCreate a private thread with moderators"),
+                ui.TextDisplay(content="**New Ticket**\nCreate a private thread with moderators"),
                 accessory=ui.Button(
                     style=ButtonStyle.green,
                     label="Create",
