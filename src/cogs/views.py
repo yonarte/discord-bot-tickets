@@ -15,9 +15,6 @@ class DialogButtons(ui.View):
     @ui.button(label="Accept", style=ButtonStyle.green)
     async def buttonAccept(self, button: ui.Button, inter: MessageInteraction):
         await inter.response.defer()
-
-        # close thread
-        await inter.channel.edit(archived=True, locked=True)
         
         # edit ticket message
         embed: Embed = self.inter.message.embeds[0]
@@ -37,6 +34,9 @@ class DialogButtons(ui.View):
         )
 
         await inter.followup.edit_message(message_id=inter.message.id, embed=answer, view=None)
+
+        # close thread
+        await inter.channel.edit(archived=True, locked=True)
 
     @ui.button(label="Cancel", style=ButtonStyle.red)
     async def buttonCancel(self, button: ui.Button, inter: MessageInteraction):
