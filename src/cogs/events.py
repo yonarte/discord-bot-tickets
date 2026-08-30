@@ -1,9 +1,6 @@
-import time
-
 from disnake import Interaction, MessageInteraction, ChannelType, Embed, Colour, ButtonStyle, ui
 from disnake.ext import commands
 
-from utils import createTicketMessageComponents
 from cogs.views import DialogButtons
 
 
@@ -44,19 +41,35 @@ class TicketButtons(commands.Cog):
             )
 
             # Create message
-            components = createTicketMessageComponents(
-                author=inter.user,
+            embed = Embed(
+                description=f"## New Ticket 🎯\n**Hello** {inter.user.mention}! Your ticket has been succesfully created!\nPlease **describe your issue in detail** and provide any relevant **screenshots** or error **logs**. Our team will assist you as soon as possible!",
                 colour=Colour.green()
             )
 
-            await thread.send(components=components)
+            embed.set_footer(
+                text="Use the button below embed to close the ticket!"
+            )
 
-            embed = Embed(
+            button = ui.Button(
+                style=ButtonStyle.gray,
+                label="Close",
+                custom_id="viewAdminTicket.button.close",
+                emoji="🔒"
+            )
+
+            view = ui.View(timeout=None)
+            view.add_item(button)
+
+            await thread.add_user(inter.user)
+            await thread.send(embed=embed, view=view)
+
+            # answer message
+            answer = Embed(
                 description=f"The [ticket]({thread.jump_url}) has been successfully created!",
                 colour=Colour.green()
             )
 
-            await inter.send(embed=embed, ephemeral=True)
+            await inter.send(embed=answer, ephemeral=True)
 
         elif custom_id == "viewAdminTicket.button.close":
             embed = Embed(
