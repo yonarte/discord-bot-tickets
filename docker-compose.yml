@@ -1,0 +1,8 @@
+services:
+  discord_bot:
+    image: discord-bot-tickets
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
