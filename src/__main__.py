@@ -1,16 +1,22 @@
 from config import DISCORD_BOT_TOKEN, bot
-from cogs.events import Init, SlashCommands, TicketButtons
+from cogs.events import Init, TicketButtons
 from cogs.commands import Commands
+
+from config import logger
 
 
 def main():
-    print("program is starting...")
+    logger.info("Start program...")
 
-    # add cogs
-    bot.add_cog(Init(bot))
-    bot.add_cog(SlashCommands(bot))
-    bot.add_cog(TicketButtons(bot))
-    bot.add_cog(Commands(bot))
+    try:
+        logger.info("Add cogs...")
+        bot.add_cog(Init(bot))
+        bot.add_cog(TicketButtons(bot))
+        bot.add_cog(Commands(bot))
+
+    except Exception as e:
+        logger.error("Failed to add cogs!", exc_info=True)
+
     bot.run(DISCORD_BOT_TOKEN)
 
 
