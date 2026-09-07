@@ -9,5 +9,5 @@ Frameworks & libraries:
 
 ### 🔒 .env.example
 ```
-DISCORD_BOT_TOKEN=
+DISCORD_BOT_TOKEN=your_token_here
 ```
