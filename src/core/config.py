@@ -38,4 +38,3 @@ file_handler = logging.FileHandler(filename="./bot.log")
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
-
