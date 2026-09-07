@@ -1,7 +1,8 @@
 FROM python:3.11-alpine
-WORKDIR /discord-bot-ticket
-COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+ENV POETRY_VIRTUALENVS_CREATE=false
+RUN pip install poetry==2.4.3
+WORKDIR /discord-bot-tickets
+COPY pyproject.toml poetry.lock ./
+RUN poetry install --no-root --only main
 COPY . .
-CMD ["python", "src/__main__.py"]
+CMD ["python", "src/main.py"]
