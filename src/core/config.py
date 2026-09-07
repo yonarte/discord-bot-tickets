@@ -1,40 +1,38 @@
-import logging
-
-from disnake import Intents
-from disnake.ext import commands
-
-from dotenv import load_dotenv
+from typing import Optional
 from os import getenv
 
+from pydantic import BaseModel
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# load .env
+from dotenv import load_dotenv
+
+
 load_dotenv()
-DISCORD_BOT_TOKEN = getenv("DISCORD_BOT_TOKEN")
 
-# discord bot
-intents = Intents.all()
-intents.message_content = True
 
-bot = commands.InteractionBot(intents=intents)
+class DiscordBot(BaseModel):
+    # token: Optional[str] = None
+    token: Optional[str] = getenv("DISCORD_BOT_TOKEN")
 
-# logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
-FORMAT: str = "[%(asctime)s][%(levelname)s] %(message)s"
-DATETIME: str = "%Y.%m.%d %H:%M:%S"
+class AppLogging(BaseModel):
+    level: str = "DEBUG"
+    format: str = "[%(asctime)s][%(levelname)s] %(message)s"
+    datetime: str = "%Y.%m.%d %H:%M:%S"
+    filename: str = "././logs/bot.log"
 
-formatter = logging.Formatter(
-    fmt=FORMAT,
-    datefmt=DATETIME
-)
 
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
+class Settings(BaseSettings):
+    # load .env is not working now...
+    """
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+        env_nested_delimiter="_",
+    )
+    """
 
-file_handler = logging.FileHandler(filename="./bot.log")
-file_handler.setLevel(logging.INFO)
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
+    discord_bot: DiscordBot = DiscordBot()
+    logs: AppLogging = AppLogging()
+
+config = Settings()
