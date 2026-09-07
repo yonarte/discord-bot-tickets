@@ -4,8 +4,9 @@
 Just a single Discord bot for creating tickets!<br>
 Frameworks & libraries: 
 * disnake
-* dotenv
 * logging
+* poetry
+* dotenv
 
 ### 🔒 .env.example
 ```
