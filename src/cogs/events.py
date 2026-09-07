@@ -2,7 +2,7 @@ from disnake import Interaction, MessageInteraction, ChannelType, Embed, Colour,
 from disnake.ext import commands
 
 from cogs.views import DialogButtons
-from config import logger
+from core.settings import logger
 
 
 class Init(commands.Cog):

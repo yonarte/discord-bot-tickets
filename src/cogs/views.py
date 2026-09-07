@@ -2,7 +2,7 @@ import datetime
 
 from disnake import ui, ButtonStyle, Interaction, MessageInteraction, Embed, Colour
 
-from config import logger
+from core.settings import logger
 
 
 class DialogButtons(ui.View):

@@ -1,7 +1,7 @@
 from disnake import CommandInteraction, Embed, ButtonStyle, ui, Permissions, Colour
 from disnake.ext import commands
 
-from config import logger
+from core.settings import logger
 
 
 class Commands(commands.Cog):

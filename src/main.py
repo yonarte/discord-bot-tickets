@@ -1,8 +1,8 @@
-from config import DISCORD_BOT_TOKEN, bot
 from cogs.events import Init, TicketButtons
 from cogs.commands import Commands
 
-from config import logger
+from core.config import config
+from core.settings import bot, logger
 
 
 def main():
@@ -17,7 +17,7 @@ def main():
     except Exception as e:
         logger.error("Failed to add cogs!", exc_info=True)
 
-    bot.run(DISCORD_BOT_TOKEN)
+    bot.run(config.discord_bot.token)
 
 
 if __name__ == "__main__":
